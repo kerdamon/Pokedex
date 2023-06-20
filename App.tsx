@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import ListTab from "./components/ListTab";
 import FavouriteTab from "./components/FavouriteTab";
+import MapTab from './components/MapTab';
 
 export default function App() {
 
@@ -14,6 +15,7 @@ export default function App() {
       <Tab.Navigator initialRouteName='Home'>
         <Tab.Screen name="FavouriteTab" component={FavouriteTab} options={{title: 'Favourite Pokemon'}}/>
         <Tab.Screen name="ListTab" component={ListTab} options={{title: 'List of Pokemons'}}/>
+        <Tab.Screen name="MapTab" component={MapTab} options={{title: 'Spotted Pokemons'}}/>
       </Tab.Navigator>
     </NavigationContainer>
   );
