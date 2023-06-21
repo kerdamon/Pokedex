@@ -1,16 +1,9 @@
-import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
-import { useState, useEffect } from 'react';
+import { FlatList, Text, View } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
+import styles from './ListStyles'
 
-import { getAllPokemons } from '../api';
-
-const ListElement = ({itemKey}:any) => {
-  return(
-    <View style={styles.listElem}>
-      <Text style={styles.pokemonName}>{itemKey}</Text>
-    </View>
-  )
-}
+import { getAllPokemons } from '../../api';
+import {ListElement} from './ListComponents'
 
 export default function ListTab({navigation}: any) {
   const {data: pokemons, isLoading, isError} = useQuery(['pokemons'], async () => {
@@ -39,24 +32,3 @@ export default function ListTab({navigation}: any) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  list: {
-    flex:1,
-    borderWidth: 1,
-    borderColor: 'red',
-  },
-  listElem: {
-    borderWidth: 1,
-    borderColor: 'blue',
-    alignItems: 'flex-start',
-    padding: 5,
-  },
-  pokemonName: {
-    borderWidth: 1,
-    borderColor: 'green',
-  }
-});

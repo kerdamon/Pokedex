@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
-import ListTab from "./components/ListTab";
+import ListTab from "./components/listTab/ListTab";
 import FavouriteTab from "./components/FavouriteTab";
 import MapTab from './components/MapTab';
 
