@@ -1,6 +1,6 @@
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 
-import axios from '../api/axiosinstance';
+import { getAllPokemons } from '../api';
 import { useState, useEffect } from 'react';
 
 export default function ListTab({navigation}: any) {
@@ -9,7 +9,7 @@ export default function ListTab({navigation}: any) {
 
   const getPokemons = async () => {
     try{
-      const response = await axios.get('/pokemon?limit=10000&offset=0');
+      const response = await getAllPokemons();
       setPokemons(response.data.results.map((e:any) => {
         let obj:any = {}
         obj.key = e.name;
