@@ -5,18 +5,24 @@ export default StyleSheet.create({
     flex: 1,
   },
   list: {
-    flex:1,
     borderWidth: 1,
     borderColor: 'red',
+    
+    flex:1,
   },
   listElem: {
     borderWidth: 1,
     borderColor: 'blue',
-    alignItems: 'flex-start',
+    
+    flexDirection: 'row',
+    alignItems: 'flex-end',
     padding: 5,
   },
-  pokemonName: {
+  text: {
     borderWidth: 1,
     borderColor: 'green',
+  },
+  bigText: {
+    fontSize: 24,
   }
 });
