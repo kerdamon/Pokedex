@@ -14,6 +14,7 @@ export default function ListTab({navigation}: any) {
       pokemon.name = element.name;
       const pokemonData = (await getPokemon(pokemon.name)).data;
       pokemon.weight = pokemonData.weight;
+      pokemon.uri = pokemonData.sprites.other["official-artwork"].front_default
       pokemons.push(pokemon);
     }
     return pokemons;
