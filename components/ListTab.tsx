@@ -1,6 +1,6 @@
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 
-import axios from 'axios';
+import axios from '../api/axiosinstance';
 import { useState, useEffect } from 'react';
 
 export default function ListTab({navigation}: any) {
@@ -9,7 +9,7 @@ export default function ListTab({navigation}: any) {
 
   const getPokemons = async () => {
     try{
-      const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0');
+      const response = await axios.get('/pokemon?limit=10000&offset=0');
       setPokemons(response.data.results.map((e:any) => {
         let obj:any = {}
         obj.key = e.name;
@@ -22,7 +22,6 @@ export default function ListTab({navigation}: any) {
 
   useEffect(() => {
     getPokemons();
-    console.log(pokemons);
   }, []);
 
   return (
