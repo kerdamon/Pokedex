@@ -3,9 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
-import ListTab from "./components/listTab/ListTab";
-import FavouriteTab from "./components/FavouriteTab";
-import MapTab from './components/MapTab';
+import ListTab from "./screeens/ListTab";
+import FavouriteTab from "./screeens/FavouriteTab";
+import MapTab from './screeens/MapTab';
 
 export default function App() {
 

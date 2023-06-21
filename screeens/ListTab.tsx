@@ -1,9 +1,9 @@
 import { FlatList, Text, View } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
-import styles from './ListStyles'
+import styles from '../components/listTab/ListStyles'
 
-import { getAllPokemons, getPokemon } from '../../api';
-import {ListElement} from './ListComponents'
+import { getAllPokemons, getPokemon } from '../api';
+import {ListElement} from '../components/listTab/ListComponents'
 
 export default function ListTab({navigation}: any) {
   const {data: pokemons, isLoading, isError} = useQuery(['pokemons'], async () => {
