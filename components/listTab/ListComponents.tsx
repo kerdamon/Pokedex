@@ -11,5 +11,5 @@ export const ListElement = ({itemKey}:any) => {
 }
 
 export const Name = ({itemKey}:any) => {
-return <Text style={styles.pokemonName}>{itemKey}</Text>;
+  return <Text style={styles.pokemonName}>{itemKey}</Text>;
 }
