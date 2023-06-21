@@ -1,35 +1,36 @@
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import { getAllPokemons } from '../api';
-import { useState, useEffect } from 'react';
 
 export default function ListTab({navigation}: any) {
 
-  const [pokemons, setPokemons] = useState([]);
-
-  const getPokemons = async () => {
-    try{
-      const response = await getAllPokemons();
-      setPokemons(response.data.results.map((e:any) => {
+  const {data: pokemons, isLoading, isError} = useQuery(['pokemons'], async () => {
+    const response = await getAllPokemons();
+    const pokemons = response.data.results.map((e:any) => {
         let obj:any = {}
         obj.key = e.name;
         return obj; 
-    }));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getPokemons();
-  }, []);
+      })
+    return pokemons;
+  });
 
   return (
+
     <View style={styles.container}>
-      <FlatList
-        data={pokemons}
-        renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-      />
+      {
+        isLoading ? (
+          <Text>Loading pokemons</Text>
+        ) : (
+          <FlatList
+            data={pokemons}
+            renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+          />
+          // <Text>zaladowne</Text>
+        )
+      }
+
     </View>
   );
 }
