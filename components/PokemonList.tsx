@@ -6,37 +6,39 @@ import { getAllPokemons, getPokemon } from '../api';
 
 export const PokemonList = () =>{
   const pokemonsPerPage = 10;
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(126);
+  const [pokemons, setPokemons] = useState<[]>([]);
 
-  const {data: pokemons, isLoading, isError} = useQuery(['pokemons', page], async () => {
+  const {isLoading, isError} = useQuery(['pokemons', page], async () => {
     const response = await getAllPokemons(pokemonsPerPage, pokemonsPerPage * page);
-    let pokemons:[] = [];
+    let newPokemons:[] = [];
     for (const element of response.data.results) {
       let pokemon:any = {};
       pokemon.name = element.name;
       const pokemonData = (await getPokemon(pokemon.name)).data;
       pokemon.weight = pokemonData.weight;
       pokemon.uri = pokemonData.sprites.other["official-artwork"].front_default
-      pokemons.push(pokemon);
+      newPokemons.push(pokemon);
     }
-    return pokemons;
+    setPokemons([...pokemons, ...newPokemons]);
+    return newPokemons;
   });
   
   return (
     <View style={styles.container}>
       {
-        isLoading ? (
-          <Text>Loading pokemons</Text>
-        ) : (
-          <FlatList
-            data={pokemons}
-            renderItem={({item}) => <ListElement pokemonData={item}/>}
-            keyExtractor={((item:any) => item.name)}
-            contentContainerStyle={styles.list}
-            onEndReachedThreshold={0.2}
-            onEndReached={() => setPage(page + 1)}
-          />
-        )
+        <FlatList
+          data={pokemons}
+          renderItem={({item}) => <ListElement pokemonData={item}/>}
+          keyExtractor={((item:any) => item.name)}
+          contentContainerStyle={styles.list}
+          onEndReachedThreshold={0.2}
+          onEndReached={() => setPage(page + 1)}
+          ListFooterComponent={
+            isLoading ? <Text>Loading</Text> : <Text>No more pokemons to load</Text>
+          }
+          ListFooterComponentStyle={{alignItems: 'center', backgroundColor: 'white'}}
+        />
       }
     </View>
   );
