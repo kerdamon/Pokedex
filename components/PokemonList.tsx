@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getPokemons, getPokemon } from '../api';
 
-export const PokemonList = () =>{
+export const PokemonList = ({navigation}:any) =>{
   const pokemonsPerPage = 10;
   const [page, setPage] = useState(0);
   const [pokemons, setPokemons] = useState<[]>([]);
