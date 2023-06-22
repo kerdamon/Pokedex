@@ -1,7 +1,7 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 import PokemonView from '../components/PokemonView';
 
-export default function FavouriteTab({navigation}: any) {
+export default function FavouriteScreen({navigation}: any) {
   return (
     <>
       <PokemonView/>

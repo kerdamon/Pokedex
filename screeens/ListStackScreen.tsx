@@ -1,6 +1,6 @@
 import { PokemonList } from "../components/PokemonList";
 
-export default function ListTab({navigation}: any) {
+export default function ListStackScreen({navigation}: any) {
   return (
     <PokemonList/>
   );

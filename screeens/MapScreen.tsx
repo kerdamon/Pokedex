@@ -1,6 +1,6 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-export default function MapTab({navigation}: any) {
+export default function MapScreen({navigation}: any) {
   return (
     <View style={styles.container}>
       <Text>This is map tab</Text>

@@ -3,9 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
-import ListTab from "./screeens/ListTab";
-import FavouriteTab from "./screeens/FavouriteTab";
-import MapTab from './screeens/MapTab';
+import ListStackScreen from "./screeens/ListStackScreen";
+import FavouriteScreen from "./screeens/FavouriteScreen";
+import MapScreen from './screeens/MapScreen';
 
 export default function App() {
 
@@ -16,9 +16,9 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
         <Tab.Navigator initialRouteName='Home'>
-          <Tab.Screen name="FavouriteTab" component={FavouriteTab} options={{title: 'Favourite Pokemon'}}/>
-          <Tab.Screen name="ListTab" component={ListTab} options={{title: 'List of Pokemons'}}/>
-          <Tab.Screen name="MapTab" component={MapTab} options={{title: 'Spotted Pokemons'}}/>
+          <Tab.Screen name="FavouriteScreen" component={FavouriteScreen} options={{title: 'Favourite Pokemon'}}/>
+          <Tab.Screen name="ListStackScreen" component={ListStackScreen} options={{title: 'List of Pokemons'}}/>
+          <Tab.Screen name="MapScreen" component={MapScreen} options={{title: 'Spotted Pokemons'}}/>
         </Tab.Navigator>
       </NavigationContainer>
     </QueryClientProvider>
