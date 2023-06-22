@@ -1,10 +1,14 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
+import PokemonView from '../components/PokemonView';
 
 export default function FavouriteTab({navigation}: any) {
   return (
-    <View style={styles.container}>
-      <Text>Favourite pokemon tab</Text>
-    </View>
+    <>
+      <PokemonView/>
+      <View>
+        <Button onPress={() => {}} title='Unfavourite'></Button>
+      </View>
+    </>
   );
 }
 
