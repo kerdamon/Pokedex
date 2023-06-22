@@ -1,15 +1,22 @@
-import { FlatList, Text, View, Image, StyleSheet, Button } from 'react-native';
+import { FlatList, Text, View, Image, StyleSheet, Button, ActivityIndicator } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import { getAllPokemons, getPokemon } from '../api';
 
 export const PokemonList = () =>{
-  const pokemonsPerPage = 10;
-  const [page, setPage] = useState(126);
+  const pokemonsPerPage = 20;
+  const [page, setPage] = useState(0);
   const [pokemons, setPokemons] = useState<[]>([]);
+  const [refreshing, setRefreshing] = useState(true);
 
-  const {isLoading, isError} = useQuery(['pokemons', page], async () => {
+  const onRefresh = () => {
+    setRefreshing(true);
+    setPokemons([]);
+    setPage(0);
+  };
+
+  const {isLoading} = useQuery(['pokemons', page], async () => {
     const response = await getAllPokemons(pokemonsPerPage, pokemonsPerPage * page);
     let newPokemons:[] = [];
     for (const element of response.data.results) {
@@ -21,24 +28,29 @@ export const PokemonList = () =>{
       newPokemons.push(pokemon);
     }
     setPokemons([...pokemons, ...newPokemons]);
+    setRefreshing(false);
     return newPokemons;
   });
   
   return (
     <View style={styles.container}>
       {
-        <FlatList
-          data={pokemons}
-          renderItem={({item}) => <ListElement pokemonData={item}/>}
-          keyExtractor={((item:any) => item.name)}
-          contentContainerStyle={styles.list}
-          onEndReachedThreshold={0.2}
-          onEndReached={() => setPage(page + 1)}
-          ListFooterComponent={
-            isLoading ? <Text>Loading</Text> : <Text>No more pokemons to load</Text>
-          }
-          ListFooterComponentStyle={{alignItems: 'center', backgroundColor: 'white'}}
-        />
+        refreshing
+        ? <ActivityIndicator size='large' style={{flex: 1}}/>
+        : <FlatList
+            data={pokemons}
+            renderItem={({item}) => <ListElement pokemonData={item}/>}
+            keyExtractor={((item:any) => item.name)}
+            contentContainerStyle={styles.list}
+            onEndReachedThreshold={0.2}
+            onEndReached={() => setPage(page + 1)}
+            ListFooterComponent={
+              isLoading ? <ActivityIndicator/> : <Text>No more pokemons to load</Text>
+            }
+            ListFooterComponentStyle={{alignItems: 'center', marginTop: 2}}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
       }
     </View>
   );
@@ -80,13 +92,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   list: {
-    // borderWidth: 1,
-    // borderColor: 'red',
-    // backgroundColor: '#C9C9C9'
   },
   listElem: {
     borderWidth: 0,
-    // borderColor: 'blue',
     backgroundColor: '#FFFFFF',
     
     flexDirection: 'row',
@@ -95,8 +103,6 @@ const styles = StyleSheet.create({
     margin: 2,
   },
   text: {
-    // borderWidth: 1,
-    // borderColor: 'green',
   },
   bigText: {
     fontSize: 24,
