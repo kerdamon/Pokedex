@@ -1,8 +1,21 @@
 import axios from "./axiosinstance";
 
-export async function getAllPokemons(limit:number, offset:number): Promise<any> {
+import { PokemonsData } from "./types";
+
+export async function getPokemons(limit:number, offset:number): Promise<PokemonsData> {
   try{
-    return await axios.get(`/pokemon?limit=${limit}&offset=${offset}`);
+    const response = await axios.get(`/pokemon?limit=${limit}&offset=${offset}`);
+    let data:PokemonsData = {
+      names: [],
+      isLast: false
+    }
+    for (const result of response.data.results) {
+      data.names.push(result.name);
+    }
+    if (!response.data.next) {
+      data.isLast = true;
+    }
+    return data; 
   } catch (error) {
     throw new Error('Failed to fetch pokemons');
   }

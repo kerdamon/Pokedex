@@ -2,27 +2,32 @@ import { FlatList, Text, View, Image, StyleSheet, Button, ActivityIndicator } fr
 import { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
-import { getAllPokemons, getPokemon } from '../api';
+import { getPokemons, getPokemon } from '../api';
 
 export const PokemonList = () =>{
-  const pokemonsPerPage = 20;
+  const pokemonsPerPage = 10;
   const [page, setPage] = useState(0);
   const [pokemons, setPokemons] = useState<[]>([]);
   const [refreshing, setRefreshing] = useState(true);
+  const [isListEnd, setIsListEnd] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
     setPokemons([]);
     setPage(0);
+    setIsListEnd(false);
   };
 
   const {isLoading} = useQuery(['pokemons', page], async () => {
-    const response = await getAllPokemons(pokemonsPerPage, pokemonsPerPage * page);
+    const {names, isLast} = await getPokemons(pokemonsPerPage, pokemonsPerPage * page);
+    if (isLast) {
+      setIsListEnd(true);
+    }
     let newPokemons:[] = [];
-    for (const element of response.data.results) {
+    for (const name of names) {
       let pokemon:any = {};
-      pokemon.name = element.name;
-      const pokemonData = (await getPokemon(pokemon.name)).data;
+      pokemon.name = name;
+      const pokemonData = (await getPokemon(name)).data;
       pokemon.weight = pokemonData.weight;
       pokemon.uri = pokemonData.sprites.other["official-artwork"].front_default
       newPokemons.push(pokemon);
@@ -43,9 +48,14 @@ export const PokemonList = () =>{
             keyExtractor={((item:any) => item.name)}
             contentContainerStyle={styles.list}
             onEndReachedThreshold={0.2}
-            onEndReached={() => setPage(page + 1)}
+            onEndReached={() => {
+              if (!isListEnd) setPage(page + 1);
+            }}
             ListFooterComponent={
-              isLoading ? <ActivityIndicator/> : <Text>No more pokemons to load</Text>
+              <View>
+                {isLoading && <ActivityIndicator/>}
+                {isListEnd && <Text>No more pokemons to load</Text>}
+              </View>
             }
             ListFooterComponentStyle={{alignItems: 'center', marginTop: 2}}
             refreshing={refreshing}
