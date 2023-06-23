@@ -1,9 +1,6 @@
 import { View, StyleSheet, Text, Image } from "react-native";
 
-export const PokemonView = ({route, navigation}:any) => {
-  const pokemonData = route.params;
-  navigation.setOptions({title: pokemonData.name});
-
+export const PokemonView = ({pokemonData}:any) => {
   return (
     <View style={styles.container}> 
       <Image source={{uri: pokemonData.uri}} style={styles.image}/>

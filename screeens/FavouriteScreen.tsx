@@ -4,7 +4,7 @@ import PokemonView from '../components/PokemonView';
 export default function FavouriteScreen({navigation}: any) {
   return (
     <>
-      {/* <PokemonView/> */}
+      {/* <PokemonView /> */}
       <View>
         <Button onPress={() => {}} title='Unfavourite'></Button>
       </View>
