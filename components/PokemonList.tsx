@@ -1,4 +1,4 @@
-import { FlatList, Text, View, Image, StyleSheet, Button, ActivityIndicator } from 'react-native';
+import { FlatList, Text, View, Image, StyleSheet, Button, ActivityIndicator, Pressable } from 'react-native';
 import { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
@@ -44,7 +44,7 @@ export const PokemonList = ({navigation}:any) =>{
         ? <ActivityIndicator size='large' style={{flex: 1}}/>
         : <FlatList
             data={pokemons}
-            renderItem={({item}) => <ListElement pokemonData={item}/>}
+            renderItem={({item}) => <ListElement pokemonData={item} navigation={navigation}/>}
             keyExtractor={((item:any) => item.name)}
             contentContainerStyle={styles.list}
             onEndReachedThreshold={0.2}
@@ -66,9 +66,13 @@ export const PokemonList = ({navigation}:any) =>{
   );
 }
 
-const ListElement = ({pokemonData}:any) => {
+const ListElement = ({pokemonData, navigation}:any) => {
+  const onPress = () => {
+    navigation.navigate('Pokemon', pokemonData );
+  }
+
   return(
-    <View style={styles.listElem}>
+    <Pressable style={styles.listElem} onPress={onPress}>
       <Name name={pokemonData.name} style={{flex:1}}/>
       <View style={{flex:1}}>
         <Weight weight={pokemonData.weight} style={{marginLeft: 5}}/>
@@ -77,7 +81,7 @@ const ListElement = ({pokemonData}:any) => {
       <View style={{alignItems: 'flex-end'}}>
         <PokemonSprite uri={pokemonData.uri}/>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
