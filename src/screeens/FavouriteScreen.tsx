@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 
 import PokemonView from '../components/PokemonView';
-import { getData } from '../api/storage';
+import { getData } from '../async_storage';
 
 export default function FavouriteScreen({navigation}: any) {
   const [pokemonData, setPokemonData] = useState();
