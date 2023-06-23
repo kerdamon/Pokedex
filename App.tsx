@@ -16,8 +16,8 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
         <Tab.Navigator initialRouteName='Home'>
-          <Tab.Screen name="FavouriteScreen" component={FavouriteScreen} options={{title: 'Favourite Pokemon'}}/>
           <Tab.Screen name="ListStackScreen" component={ListStackScreen} options={{title: 'List of Pokemons'}}/>
+          <Tab.Screen name="FavouriteScreen" component={FavouriteScreen} options={{title: 'Favourite Pokemon'}}/>
           <Tab.Screen name="MapScreen" component={MapScreen} options={{title: 'Spotted Pokemons'}}/>
         </Tab.Navigator>
       </NavigationContainer>

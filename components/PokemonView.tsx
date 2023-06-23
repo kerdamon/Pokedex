@@ -1,11 +1,18 @@
 import { View, StyleSheet, Text, Image } from "react-native";
 
 export const PokemonView = ({pokemonData}:any) => {
+
   return (
-    <View style={styles.container}> 
-      <Image source={{uri: pokemonData.uri}} style={styles.image}/>
-      <InfoField pokemonData={pokemonData} style={styles.infoField}/>
-    </View>
+    <>
+      {
+      !pokemonData 
+      ? <Text>None</Text> 
+      : <View style={styles.container}> 
+          <Image source={{uri: pokemonData.uri}} style={styles.image}/>
+          <InfoField pokemonData={pokemonData} style={styles.infoField}/>
+        </View>
+      }
+    </>
   );
 }
 

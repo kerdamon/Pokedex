@@ -27,7 +27,7 @@ export const PokemonList = ({navigation}:any) =>{
     for (const name of names) {
       let pokemon:any = {};
       pokemon.name = name;
-      const pokemonData = (await getPokemon(name)).data;
+      const pokemonData = (await getPokemon(name!)).data;
       pokemon.weight = pokemonData.weight;
       pokemon.uri = pokemonData.sprites.other["official-artwork"].front_default
       newPokemons.push(pokemon);
