@@ -14,19 +14,14 @@ export default function FavouriteScreen({navigation}: any) {
 
   return (
     <>
-      {pokemonData && <PokemonView pokemonData={pokemonData}/>}
-      <View>    
-        <Button onPress={() => storePokemon(null)} title='Unfavourite'></Button>
+      <View style={{flex:1, justifyContent:'center'}}>
+        {
+        pokemonData 
+        ? <PokemonView pokemonData={pokemonData}/>
+        : <Text style={{alignSelf:'center'}}>No favourite pokemons</Text>
+        }
       </View>
+      <Button onPress={() => storePokemon(null)} title='Unfavourite'></Button>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

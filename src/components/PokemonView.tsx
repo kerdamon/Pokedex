@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Image } from "react-native";
 export const PokemonView = ({pokemonData}:any) => {
 
   return (
-    <>
+    <View style={styles.container}>
       {
       !pokemonData 
       ? <Text>None</Text> 
@@ -12,7 +12,7 @@ export const PokemonView = ({pokemonData}:any) => {
           <InfoField pokemonData={pokemonData} style={styles.infoField}/>
         </View>
       }
-    </>
+    </View>
   );
 }
 
