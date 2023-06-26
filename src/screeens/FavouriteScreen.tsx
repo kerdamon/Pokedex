@@ -4,20 +4,15 @@ import { useEffect, useState } from 'react';
 
 import PokemonView from '../components/PokemonView';
 import { getData } from '../async_storage';
+import useLoadPokemon from '../hooks/useLoadPokemon';
+
 
 export default function FavouriteScreen({navigation}: any) {
-  const [pokemonData, setPokemonData] = useState({});
+  const pokemonData = useLoadPokemon();
 
   const clearFavourites = () => {
     console.log('clear');
   };
-
-  useEffect(() => {
-    getData('favourites').then(data => {
-      setPokemonData(data);
-      console.log('setting new pokemon');
-    });
-  }, []);
 
   return (
     <>
