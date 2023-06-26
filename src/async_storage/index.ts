@@ -7,5 +7,6 @@ export const storeData = async (key:string, value:string) => {
 
 export const getData = async (key:string) => {
   const jsonValue = await AsyncStorage.getItem(key);
+  console.log(`Odczytuje z pamieci ${jsonValue}`);
   return jsonValue != null ? JSON.parse(jsonValue) : null;
 };

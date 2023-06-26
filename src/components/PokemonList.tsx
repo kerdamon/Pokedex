@@ -67,12 +67,12 @@ export const PokemonList = ({navigation}:any) =>{
 }
 
 const ListElement = ({pokemonData, navigation}:any) => {
-  const onPress = () => {
+  const handlePress = () => {
     navigation.navigate('Pokemon', pokemonData );
   }
 
   return(
-    <Pressable style={styles.listElem} onPress={onPress}>
+    <Pressable style={styles.listElem} onPress={handlePress}>
       <Name name={pokemonData.name} style={{flex:1}}/>
       <View style={{flex:1}}>
         <Weight weight={pokemonData.weight} style={{marginLeft: 5}}/>
