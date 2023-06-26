@@ -11,7 +11,7 @@ export const PokemonList = ({navigation}:any) =>{
   const [refreshing, setRefreshing] = useState(true);
   const [isListEnd, setIsListEnd] = useState(false);
 
-  const onRefresh = () => {
+  const handleRefresh = () => {
     setRefreshing(true);
     setPokemons([]);
     setPage(0);
@@ -59,7 +59,7 @@ export const PokemonList = ({navigation}:any) =>{
             }
             ListFooterComponentStyle={{alignItems: 'center', marginTop: 2}}
             refreshing={refreshing}
-            onRefresh={onRefresh}
+            onRefresh={handleRefresh}
           />
       }
     </View>
