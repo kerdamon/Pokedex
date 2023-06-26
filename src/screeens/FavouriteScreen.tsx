@@ -4,29 +4,24 @@ import { useEffect, useState } from 'react';
 
 import PokemonView from '../components/PokemonView';
 import { getData } from '../async_storage';
-import { useSelector } from 'react-redux';
 
 export default function FavouriteScreen({navigation}: any) {
-  const favouritePokemonName = useSelector(state => state.favouritePokemon.name);
+  const [pokemonData, setPokemonData] = useState({});
 
   const clearFavourites = () => {
     console.log('clear');
   };
 
-  let pokemonData = null;
-
   useEffect(() => {
     getData('favourites').then(data => {
-      console.log(`pauke do pokemondata`);
-      console.log(data);
-      pokemonData = data;
+      setPokemonData(data);
+      console.log('setting new pokemon');
     });
-  }, [favouritePokemonName]);
+  }, []);
 
   return (
     <>
       {pokemonData && <PokemonView pokemonData={pokemonData}/>}
-      <Text>W reduxie siedzi sobie {favouritePokemonName}</Text>
       <View>    
         <Button onPress={() => clearFavourites()} title='Unfavourite'></Button>
       </View>

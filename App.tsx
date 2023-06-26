@@ -8,7 +8,6 @@ import { TabScreens } from './src/containers/TabScreens';
 
 export default function App() {
 
-
   const queryClient = new QueryClient();
 
   return (

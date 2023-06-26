@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const favouritePokemonSlice = createSlice({
   name: 'favouritePokemon',
   initialState: {
-    name: '',
+    name: undefined,
   },
   reducers: {
     setCurrentFavouritePokemonName: (state, action) => {
