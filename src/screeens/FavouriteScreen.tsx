@@ -5,20 +5,18 @@ import { useEffect, useState } from 'react';
 import PokemonView from '../components/PokemonView';
 import { getData } from '../async_storage';
 import useLoadPokemon from '../hooks/useLoadPokemon';
+import useStorePokemon from '../hooks/useStorePokemon';
 
 
 export default function FavouriteScreen({navigation}: any) {
   const pokemonData = useLoadPokemon();
-
-  const clearFavourites = () => {
-    console.log('clear');
-  };
+  const storePokemon = useStorePokemon();
 
   return (
     <>
       {pokemonData && <PokemonView pokemonData={pokemonData}/>}
       <View>    
-        <Button onPress={() => clearFavourites()} title='Unfavourite'></Button>
+        <Button onPress={() => storePokemon(null)} title='Unfavourite'></Button>
       </View>
     </>
   );

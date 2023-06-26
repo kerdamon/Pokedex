@@ -4,6 +4,7 @@ import { setCurrentFavouritePokemonName } from "../redux/favouritePokemonSlice";
 
 export default function useStorePokemon () {
   const dispatch = useDispatch();
-
-  return (pokemonData:any) => storeData('favourites', JSON.stringify(pokemonData)).then(dispatch(setCurrentFavouritePokemonName(pokemonData.name)));
+  return (pokemonData:any) => {
+    storeData('favourites', JSON.stringify(pokemonData)).then(dispatch(setCurrentFavouritePokemonName(pokemonData?.name)));
+  }
 }
