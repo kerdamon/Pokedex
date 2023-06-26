@@ -1,20 +1,18 @@
 import { Button } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setCurrentFavouritePokemonName } from "../redux/favouritePokemonSlice";
-import { useDispatch } from "react-redux";
 
 import PokemonView from "../components/PokemonView";
-import { storeData } from "../async_storage";
+import useStorePokemon from "../hooks/useStorePokemon";
 
 export const PokemonListModal = ({route, navigation}:any) => {
+  const storePokemon = useStorePokemon();
+
   const pokemonData = route.params;
   navigation.setOptions({title: pokemonData.name});
-  const dispatch = useDispatch();
 
   return (
     <>
       <PokemonView pokemonData={pokemonData}/>
-      <Button onPress={() => storeData('favourites', JSON.stringify(pokemonData)).then(dispatch(setCurrentFavouritePokemonName(pokemonData.name)))} title="Add to favourites"/>
+      <Button onPress={() => storePokemon(pokemonData)} title="Add to favourites"/>
     </>
   );
 }
