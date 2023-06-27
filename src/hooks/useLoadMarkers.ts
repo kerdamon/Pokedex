@@ -13,6 +13,6 @@ export const useLoadMarkers = () => {
   useEffect(() => {
     loadMarkers().then(d => {
       dispatch(setMarkers(d))
-    }).catch(err => console.log(err));
+    });
   }, []);
 }
