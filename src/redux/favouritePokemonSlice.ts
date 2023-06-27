@@ -6,12 +6,12 @@ export const favouritePokemonSlice = createSlice({
     name: undefined,
   },
   reducers: {
-    setCurrentFavouritePokemonName: (state, action) => {
+    setFavouritePokemons: (state, action) => {
       state.name = action.payload
     }
   }
 })
 
-export const { setCurrentFavouritePokemonName } = favouritePokemonSlice.actions
+export const { setFavouritePokemons } = favouritePokemonSlice.actions
 
 export default favouritePokemonSlice.reducer

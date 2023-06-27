@@ -1,10 +1,11 @@
 import { useDispatch } from "react-redux";
 import { storeData } from "../async_storage";
-import { setCurrentFavouritePokemonName } from "../redux/favouritePokemonSlice";
+import { setFavouritePokemons } from "../redux/favouritePokemonSlice";
+import { PokemonData } from "../types/pokemonData";
 
 export default function useStorePokemon () {
   const dispatch = useDispatch();
-  return (pokemonData:any) => {
-    storeData('favourites', JSON.stringify(pokemonData)).then(dispatch(setCurrentFavouritePokemonName(pokemonData?.name)));
+  return (pokemonData:PokemonData) => {
+    storeData('favourites', JSON.stringify(pokemonData)).then(dispatch(setFavouritePokemons(pokemonData?.name)));
   }
 }

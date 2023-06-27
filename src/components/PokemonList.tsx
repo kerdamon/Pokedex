@@ -74,10 +74,6 @@ const ListElement = ({pokemonData, navigation}:any) => {
   return(
     <Pressable style={styles.listElem} onPress={handlePress}>
       <Name name={pokemonData.name} style={{flex:1}}/>
-      <View style={{flex:1}}>
-        <Weight weight={pokemonData.weight} style={{marginLeft: 5}}/>
-        <Types style={{marginLeft: 5}}/>
-      </View>
       <View style={{alignItems: 'flex-end'}}>
         <PokemonSprite uri={pokemonData.uri}/>
       </View>
