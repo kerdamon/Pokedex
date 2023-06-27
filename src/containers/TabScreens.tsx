@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import ListStackScreen from '../screeens/ListStackScreen';
 import FavouriteScreen from "../screeens/FavouriteScreen";
@@ -34,13 +35,31 @@ export const TabScreens = () => {
       />
       <Tab.Screen 
         name="MapScreen" 
-        component={MapScreen} 
+        component={MapTab} 
         options={{
           title: 'Spotted Pokemons', 
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="map" color={color} size={size} />
           )}}
-      />
+      ></Tab.Screen>
     </Tab.Navigator>
+  )
+}
+
+import Map from '../components/Map';
+import { FoundPokemonModal } from '../screeens/FoundPokemonModal';
+
+const MapStack = createNativeStackNavigator();
+
+const MapTab = () => {
+  return (
+    <MapStack.Navigator>
+      <MapStack.Group screenOptions={{headerShown: false}}>
+        <MapStack.Screen name="Map" component={MapScreen}/>
+      </MapStack.Group>
+      <MapStack.Group screenOptions={{presentation: 'modal'}}>
+        <MapStack.Screen name="FoundPokemonModal" component={FoundPokemonModal} options={{title: 'New pokemon info'}}/>
+      </MapStack.Group>
+    </MapStack.Navigator>
   )
 }
