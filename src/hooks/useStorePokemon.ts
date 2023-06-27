@@ -6,6 +6,6 @@ import { PokemonData } from "../types/pokemonData";
 export default function useStorePokemon () {
   const dispatch = useDispatch();
   return (pokemonData:PokemonData) => {
-    storeData('favourites', JSON.stringify(pokemonData)).then(dispatch(setFavouritePokemons(pokemonData?.name)));
+    storeData('favourites', pokemonData).then(dispatch(setFavouritePokemons(pokemonData?.name)));
   }
 }
