@@ -16,12 +16,11 @@ const storeMarkers = async (data:FoundPokemonMarker) => {
 }
 
 export default function Map({navigation}: any) {
-  // const [markers, setMarkers] = useState<FoundPokemonMarker[]>([]);
   const markers = useSelector(state => state.marker);
   const dispatch = useDispatch();
 
   const handleMapPress = (e:LongPressEvent) => {
-    // navigation.navigate('FoundPokemonModal');
+    navigation.navigate('FoundPokemonModal', e.nativeEvent.coordinate);
     // setMarkers([
     //   ...markers,
     //   {
@@ -30,10 +29,7 @@ export default function Map({navigation}: any) {
     //     coordinate: e.nativeEvent.coordinate,
     //   }
     // ]);
-    dispatch(addMarker({
-      key: JSON.stringify(e.nativeEvent.coordinate.latitude) + JSON.stringify(e.nativeEvent.coordinate.latitude),
-      coordinate: e.nativeEvent.coordinate,
-    }));
+
   }
 
   // useEffect(() => {

@@ -1,7 +1,15 @@
 import { TextInput, View, StyleSheet, Text, Button } from "react-native"
+import { useDispatch } from "react-redux";
 
-export const FoundPokemonModal = ({navigation}:any) => {
+import { addMarker } from "../redux/markerSlice";
+
+export const FoundPokemonModal = ({navigation, route}:any) => {
+  const dispatch = useDispatch();
   const handlePress = () => {
+    dispatch(addMarker({
+      key: JSON.stringify(route.params.latitude) + JSON.stringify(route.params.latitude),
+      coordinate: route.params,
+    }));
     navigation.goBack();
   }
 
