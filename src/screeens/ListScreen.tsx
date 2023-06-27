@@ -7,6 +7,6 @@ const ListStack = createNativeStackNavigator();
 
 export default function ListScreen({navigation}: any) {
   return (
-    <PokemonList/>
+    <PokemonList navigation={navigation}/>
   );
 }

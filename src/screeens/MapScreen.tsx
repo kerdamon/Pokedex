@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 
 import Map from '../components/Map';
 
-export default function MapScreen() {
+export default function MapScreen({navigation}:any) {
   return (
     <View style={styles.container}>
-      <Map/>
+      <Map navigation={navigation}/>
       <Button title='Clear markers'></Button>
     </View>
   );
