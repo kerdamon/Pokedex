@@ -18,7 +18,7 @@ export default function FavouriteScreen({navigation}: any) {
         : <Text style={{alignSelf:'center'}}>No favourite pokemons</Text>
         }
       </View>
-      <Button onPress={() => storePokemon([])} title='Unfavourite'></Button>
+      <Button onPress={() => storePokemon(null)} title='Unfavourite'></Button>
     </>
   );
 }
