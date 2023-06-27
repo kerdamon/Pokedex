@@ -6,15 +6,15 @@ export default function Map({navigation}: any) {
   const [markers, setMarkers] = useState<any>([]);
 
   const handleMapPress = (e:LongPressEvent) => {
-    console.log(JSON.stringify(e.nativeEvent.coordinate.latitude) + JSON.stringify(e.nativeEvent.coordinate.latitude));
-    setMarkers([
-      ...markers,
-      {
-        key: JSON.stringify(e.nativeEvent.coordinate.latitude) + JSON.stringify(e.nativeEvent.coordinate.latitude),
-        pokemonData: null,
-        coordinate: e.nativeEvent.coordinate,
-      }
-    ]);
+    navigation.navigate('FoundPokemonModal');
+    // setMarkers([
+    //   ...markers,
+    //   {
+    //     key: JSON.stringify(e.nativeEvent.coordinate.latitude) + JSON.stringify(e.nativeEvent.coordinate.latitude),
+    //     pokemonData: null,
+    //     coordinate: e.nativeEvent.coordinate,
+    //   }
+    // ]);
   }
 
   const handleMarkerPress = (e:MarkerPressEvent) => {
