@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createSlice } from '@reduxjs/toolkit'
 
 export const favouritePokemonSlice = createSlice({
@@ -6,12 +7,12 @@ export const favouritePokemonSlice = createSlice({
     name: undefined,
   },
   reducers: {
-    setCurrentFavouritePokemonName: (state, action) => {
+    setFavouritePokemons: (state, action) => {
       state.name = action.payload
     }
   }
 })
 
-export const { setCurrentFavouritePokemonName } = favouritePokemonSlice.actions
+export const { setFavouritePokemons } = favouritePokemonSlice.actions
 
 export default favouritePokemonSlice.reducer
