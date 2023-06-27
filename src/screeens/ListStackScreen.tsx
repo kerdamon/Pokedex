@@ -7,8 +7,8 @@ const ListStack = createNativeStackNavigator();
 
 export default function ListStackScreen({navigation}: any) {
   return (
-    <ListStack.Navigator>
-      <ListStack.Group screenOptions={{headerShown: false}}>
+    <ListStack.Navigator screenOptions={{headerShown: false}}>
+      <ListStack.Group>
         <ListStack.Screen name="List" component={PokemonList}/>
       </ListStack.Group>
       <ListStack.Group screenOptions={{presentation: 'modal'}}>

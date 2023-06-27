@@ -7,7 +7,6 @@ export const PokemonListModal = ({route, navigation}:any) => {
   const storePokemon = useStorePokemon();
 
   const pokemonData = route.params;
-  navigation.setOptions({title: pokemonData.name});
 
   return (
     <>
