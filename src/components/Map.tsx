@@ -3,38 +3,15 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import MapView, { LongPressEvent, Marker, MarkerPressEvent } from 'react-native-maps';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { loadData, storeData } from '../async_storage';
-import { FoundPokemonMarker } from '../types/foundPokemonMarker';
-import { addMarker } from '../redux/markerSlice';
-
-const loadMarkers = async () => {
-  return await loadData('foundPokemonsMarkers');
-}
-
-const storeMarkers = async (data:FoundPokemonMarker) => {
-  storeData('foundPokemonsMarkers', data);
-}
+import { useLoadMarkers } from '../hooks/useLoadMarkers';
 
 export default function Map({navigation}: any) {
   const markers = useSelector(state => state.marker);
-  const dispatch = useDispatch();
+  useLoadMarkers();
 
   const handleMapPress = (e:LongPressEvent) => {
     navigation.navigate('FoundPokemonModal', e.nativeEvent.coordinate);
-    // setMarkers([
-    //   ...markers,
-    //   {
-    //     key: JSON.stringify(e.nativeEvent.coordinate.latitude) + JSON.stringify(e.nativeEvent.coordinate.latitude),
-    //     pokemonData: null,
-    //     coordinate: e.nativeEvent.coordinate,
-    //   }
-    // ]);
-
   }
-
-  // useEffect(() => {
-  //   loadMarkers().then(d => dispatch(addMarker(d)));
-  // }, []);
 
   // const handleMarkerPress = (e:MarkerPressEvent) => {
   //   console.log(markers.find(p => p.key === e.nativeEvent.id));
@@ -42,7 +19,7 @@ export default function Map({navigation}: any) {
 
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} onLongPress={e => handleMapPress(e)}>
+      <MapView style={styles.map} onLongPress={e => handleMapPress(e)} onPress={() => console.log(markers)}>
         {markers.map(m => (
           // <Marker key={m.key} identifier={m.key} coordinate={m.coordinate} onPress={e => handleMarkerPress(e)}/>
           <Marker key={m.key} identifier={m.key} coordinate={m.coordinate}/>

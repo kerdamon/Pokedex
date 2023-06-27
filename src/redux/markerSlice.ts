@@ -11,7 +11,11 @@ export const markerSlice = createSlice({
       state.push(action.payload);
     },
     setMarkers: (state, action) => {
-      state = action.payload;
+      state.length = 0; //state object cannot be overwritten, because it causes bugs, so we need to operate on this variable and empty it
+      if (action.payload === null) return;
+      for (const elem of action.payload){
+        state.push(elem);
+      }
     }
   }
 })

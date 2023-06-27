@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useSelector } from 'react-redux';
 
 import Map from '../components/Map';
 import { FoundPokemonModal } from './FoundPokemonModal';
