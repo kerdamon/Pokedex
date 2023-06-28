@@ -11,18 +11,17 @@ export default function Map({navigation}: any) {
 
   const handleMapPress = (e:LongPressEvent) => {
     navigation.navigate('FoundPokemonModal', e.nativeEvent.coordinate);
-  }
+  };
 
-  // const handleMarkerPress = (e:MarkerPressEvent) => {
-  //   console.log(markers.find(p => p.key === e.nativeEvent.id));
-  // }  
+  const handleMarkerPress = (e:MarkerPressEvent) => {
+    console.log(markers.find(p => p.id === e.nativeEvent.id));
+  };
 
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} onLongPress={e => handleMapPress(e)} onPress={() => console.log(markers)}>
+      <MapView style={styles.map} onLongPress={e => handleMapPress(e)}> 
         {markers.map(m => (
-          // <Marker key={m.key} identifier={m.key} coordinate={m.coordinate} onPress={e => handleMarkerPress(e)}/>
-          <Marker key={m.key} identifier={m.key} coordinate={m.coordinate}/>
+          <Marker key={m.id} identifier={m.id} coordinate={m.coordinate} onPress={e => handleMarkerPress(e)}/>
         ))}
       </MapView>
     </View>

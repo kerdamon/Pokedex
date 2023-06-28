@@ -1,6 +1,7 @@
 import { LatLng } from "react-native-maps";
 
 export interface FoundPokemonMarker {
-  key: string,
-  coordinate: LatLng
+  id: string,
+  coordinate: LatLng,
+  pokemonName: string,
 }

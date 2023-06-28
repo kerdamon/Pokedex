@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { FoundPokemonMarker } from '../types/foundPokemonMarker'
+import type { FoundPokemonMarker } from '../types/FoundPokemonMarker';
 
 const initialState: FoundPokemonMarker[] = []
 
