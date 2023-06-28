@@ -1,8 +1,11 @@
 import { TextInput, View, StyleSheet, Text, Button } from "react-native"
+import { useQuery } from '@tanstack/react-query';
 
 import { useStoreMarker } from "../hooks/useStoreMarkers";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
+import axios from "axios";
+import { getPokemons } from "../api";
 
 export const FoundPokemonModal = ({navigation, route}:any) => {
   const [chosenPokemon, setChosenPokemon] = useState();
@@ -19,16 +22,35 @@ export const FoundPokemonModal = ({navigation, route}:any) => {
     setChosenPokemon(value);
   }
 
+  //move this to higher component to not query api that often
+  const {data:pokemonNames, isLoading} = useQuery(['pokemonNames'], async () => {
+    const {names} = await getPokemons(100000, 0);
+    return names;
+  });
+
   return (
     <View style={styles.container}>
-      <Picker selectedValue={chosenPokemon} onValueChange={handlePickerValueChange}>
-        <Picker.Item label="jeden" value={1}/>
-        <Picker.Item label="dwa" value={2}/>
-      </Picker>
+      <PokemonPicker  chosenPokemon={chosenPokemon} handlePickerValueChange={handlePickerValueChange} pokemonNames={pokemonNames} isloading={isLoading}></PokemonPicker>
       <Text>Notes</Text>
       <TextInput style={styles.textInput}></TextInput>
       <Button title='Add' onPress={e => handlePress()}></Button>
     </View>
+  )
+}
+
+const PokemonPicker = ({chosenPokemon, handlePickerValueChange, pokemonNames, isloading}:any) => {
+
+  return (
+    <Picker selectedValue={chosenPokemon} onValueChange={handlePickerValueChange}>
+      {
+      isloading 
+      ? <Picker.Item label="Laduje"></Picker.Item>
+      : pokemonNames.map(e => (
+        <Picker.Item key={e} label={e} value={e}/>
+      ))}
+      <Picker.Item label="jeden" value={1}/>
+      <Picker.Item label="dwa" value={2}/>
+    </Picker> 
   )
 }
 

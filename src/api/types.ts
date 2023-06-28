@@ -1,4 +1,4 @@
-export interface PokemonsData {
-  names: [string?],
+export interface PokemonNamesSlice {
+  names: string[],
   isLast: Boolean,
 }
