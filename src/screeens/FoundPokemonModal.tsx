@@ -11,12 +11,14 @@ export const FoundPokemonModal = ({navigation, route}:any) => {
   const storeMarker = useStoreMarker();
   const [loading, setLoading] = useState(false);
   const [pokemonItems, setPokemonItems] = useState<TAutocompleteDropdownItem[]>();
+  const [notes, handleNotesTextChange] = useState('');
 
   const handlePress = () => {
     storeMarker({
       id: JSON.stringify(route.params.latitude) + JSON.stringify(route.params.latitude),
       coordinate: route.params,
-      pokemonName: selectedPokemon?.title!
+      pokemonName: selectedPokemon?.title!,
+      notes
     });
     navigation.goBack();
   }
@@ -54,8 +56,9 @@ export const FoundPokemonModal = ({navigation, route}:any) => {
         </>
       }
       <Text>Notes</Text>
-      <TextInput style={styles.textInput}></TextInput>
-      <Button title='Add' onPress={e => handlePress()} disabled={loading}></Button>
+      <TextInput multiline style={styles.textInput} onChangeText={handleNotesTextChange}
+        value={notes}></TextInput>
+      <Button title='Add' onPress={e => handlePress()} disabled={loading || !selectedPokemon}></Button>
     </View>
   )
 }
@@ -74,6 +77,7 @@ export const PokemonDropdown = ({handleGetPokemons, selectedPokemon, setSelected
       onChangeText={handleGetPokemons}
       useFilter={false}
       debounce={600}
+      showChevron={false}
       onClear={onClearPress}
       onSelectItem={item => {
         item && setSelectedPokemon(item);
@@ -97,5 +101,6 @@ const styles = StyleSheet.create({
   }, 
   textInput: {
     borderWidth: 1,
+    padding: 5
   }
 })
