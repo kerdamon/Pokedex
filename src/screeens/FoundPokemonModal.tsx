@@ -1,5 +1,6 @@
 import { TextInput, View, StyleSheet, Text, Button } from "react-native"
 import { useQuery } from '@tanstack/react-query';
+import {AutocompleteDropdown} from 'react-native-autocomplete-dropdown'
 
 import { useStoreMarker } from "../hooks/useStoreMarkers";
 import { Picker } from "@react-native-picker/picker";
@@ -41,19 +42,33 @@ export const FoundPokemonModal = ({navigation, route}:any) => {
   )
 }
 
-const PokemonPicker = ({chosenPokemon, handlePickerValueChange, pokemonNames, isloading}:any) => {
+export const PokemonPicker = ({chosenPokemon, handlePickerValueChange, pokemonNames, isloading}:any) => {
+  const [selectedItem, setSelectedItem] = useState(null);
 
   return (
-    <Picker selectedValue={chosenPokemon} onValueChange={handlePickerValueChange}>
-      {
-      isloading 
-      ? <Picker.Item label="Laduje"></Picker.Item>
-      : pokemonNames.map(e => (
-        <Picker.Item key={e} label={e} value={e}/>
-      ))}
-      <Picker.Item label="jeden" value={1}/>
-      <Picker.Item label="dwa" value={2}/>
-    </Picker> 
+    // <Picker selectedValue={chosenPokemon} onValueChange={handlePickerValueChange}>
+    //   {
+    //   isloading 
+    //   ? <Picker.Item label="Laduje"></Picker.Item>
+    //   : pokemonNames.map(e => (
+    //     <Picker.Item key={e} label={e} value={e}/>
+    //   ))}
+    //   <Picker.Item label="jeden" value={1}/>
+    //   <Picker.Item label="dwa" value={2}/>
+    // </Picker> 
+
+    <AutocompleteDropdown
+      clearOnFocus={false}
+      closeOnBlur={true}
+      closeOnSubmit={false}
+      initialValue={{ id: '2' }} // or just '2'
+      onSelectItem={setSelectedItem}
+      dataSet={[
+        { id: '1', title: 'Alpha' },
+        { id: '2', title: 'Beta' },
+        { id: '3', title: 'Gamma' },
+      ]}
+    />
   )
 }
 

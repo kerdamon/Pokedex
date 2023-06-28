@@ -16,7 +16,7 @@ export const TabScreens = () => {
   const Tab = createBottomTabNavigator();
 
   return (      
-    <Tab.Navigator initialRouteName='Home'>
+    <Tab.Navigator initialRouteName='Home' screenOptions={{headerShown: false}}>
       <Tab.Screen 
         name="ListStackScreen" 
         component={ListTab} 
@@ -70,7 +70,7 @@ const MapTab = () => {
       <MapStack.Group screenOptions={{headerShown: false}}>
         <MapStack.Screen name="Map" component={MapScreen}/>
       </MapStack.Group>
-      <MapStack.Group screenOptions={{presentation: 'modal'}}>
+      <MapStack.Group>
         <MapStack.Screen name="FoundPokemonModal" component={FoundPokemonModal} options={{title: 'New pokemon info'}}/>
       </MapStack.Group>
     </MapStack.Navigator>
