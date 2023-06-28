@@ -1,73 +1,83 @@
 import { TextInput, View, StyleSheet, Text, Button } from "react-native"
-import { useQuery } from '@tanstack/react-query';
-import {AutocompleteDropdown} from 'react-native-autocomplete-dropdown'
+import {AutocompleteDropdown, TAutocompleteDropdownItem} from 'react-native-autocomplete-dropdown'
+import { memo, useCallback, useEffect } from "react";
 
 import { useStoreMarker } from "../hooks/useStoreMarkers";
-import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
-import axios from "axios";
 import { getPokemons } from "../api";
 
 export const FoundPokemonModal = ({navigation, route}:any) => {
-  const [chosenPokemon, setChosenPokemon] = useState<string>();
+  const [selectedPokemon, setSelectedPokemon] = useState<TAutocompleteDropdownItem>();
   const storeMarker = useStoreMarker();
+  const [loading, setLoading] = useState(false);
+  const [pokemonItems, setPokemonItems] = useState<TAutocompleteDropdownItem[]>();
+
   const handlePress = () => {
     storeMarker({
       id: JSON.stringify(route.params.latitude) + JSON.stringify(route.params.latitude),
       coordinate: route.params,
-      pokemonName:chosenPokemon!
+      pokemonName: selectedPokemon?.title!
     });
     navigation.goBack();
   }
 
-  const handlePickerValueChange = (value:any, index:number) => {
-    setChosenPokemon(value);
-  }
-
-  //move this to higher component to not query api that often
-  const {data:pokemonNames, isLoading} = useQuery(['pokemonName'], async () => {
+  const handleGetPokemons = useCallback(async (q:any) => {
+    const filterToken = q.toLowerCase()
+    console.log('getPokemons query:', q)
+    if (typeof q !== 'string' || q.length < 3) {
+      setPokemonItems([]);
+      return;
+    }
+    setLoading(true);
     const {names} = await getPokemons(100000, 0);
-    setChosenPokemon(names[0]);
-    console.log('koniec fetchowania');
-    return names;
-  });
+    const pokemons = names
+      .filter(n => n.toLowerCase().includes(filterToken))
+      .map(n => ({
+        id: n,
+        title: n,
+      }));
+    setPokemonItems(pokemons);
+    setLoading(false);
+  }, [])
+
+  useEffect(() => console.log('render found pokemon modal'));
+
+  const isLoading = true;
 
   return (
     <View style={styles.container}>
-      <PokemonPicker chosenPokemon={chosenPokemon} handlePickerValueChange={handlePickerValueChange} pokemonNames={pokemonNames} isloading={isLoading}></PokemonPicker>
+      <PokemonDropdown handleGetPokemons={handleGetPokemons} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} dataSet={pokemonItems} isloading={loading} setPokemonItems={setPokemonItems}/>
       <Text>Notes</Text>
       <TextInput style={styles.textInput}></TextInput>
-      {!isLoading && <Button title='Add' onPress={e => handlePress()}></Button>}
+      <Button title='Add' onPress={e => handlePress()} disabled={isLoading}></Button>
     </View>
   )
 }
 
-export const PokemonPicker = ({chosenPokemon, handlePickerValueChange, pokemonNames, isloading}:any) => {
-  const [selectedItem, setSelectedItem] = useState(null);
+export const PokemonDropdown = ({handleGetPokemons, selectedPokemon, setSelectedPokemon, dataSet, isLoading, setPokemonItems}:any) => {
+  console.log(selectedPokemon);
+
+  const onClearPress = useCallback(() => {
+    setPokemonItems(null)
+  }, [])
+
+  const onOpenSuggestionsList = useCallback(isOpened => {}, [])
 
   return (
-    // <Picker selectedValue={chosenPokemon} onValueChange={handlePickerValueChange}>
-    //   {
-    //   isloading 
-    //   ? <Picker.Item label="Laduje"></Picker.Item>
-    //   : pokemonNames.map(e => (
-    //     <Picker.Item key={e} label={e} value={e}/>
-    //   ))}
-    //   <Picker.Item label="jeden" value={1}/>
-    //   <Picker.Item label="dwa" value={2}/>
-    // </Picker> 
-
     <AutocompleteDropdown
       clearOnFocus={false}
       closeOnBlur={true}
       closeOnSubmit={false}
-      initialValue={{ id: '2' }} // or just '2'
-      onSelectItem={setSelectedItem}
-      dataSet={[
-        { id: '1', title: 'Alpha' },
-        { id: '2', title: 'Beta' },
-        { id: '3', title: 'Gamma' },
-      ]}
+      onChangeText={handleGetPokemons}
+      useFilter={false}
+      debounce={600}
+      onClear={onClearPress}
+      onOpenSuggestionsList={onOpenSuggestionsList}
+      onSelectItem={item => {
+        item && setSelectedPokemon(item.id)
+      }}
+      dataSet={dataSet}
+      loading={isLoading}
     />
   )
 }
