@@ -1,13 +1,13 @@
 import { TextInput, View, StyleSheet, Text, Button } from "react-native"
 import {AutocompleteDropdown, TAutocompleteDropdownItem} from 'react-native-autocomplete-dropdown'
-import { memo, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { useStoreMarker } from "../hooks/useStoreMarkers";
 import { useState } from "react";
 import { getPokemons } from "../api";
 
 export const FoundPokemonModal = ({navigation, route}:any) => {
-  const [selectedPokemon, setSelectedPokemon] = useState<TAutocompleteDropdownItem>();
+  const [selectedPokemon, setSelectedPokemon] = useState<TAutocompleteDropdownItem>(null);
   const storeMarker = useStoreMarker();
   const [loading, setLoading] = useState(false);
   const [pokemonItems, setPokemonItems] = useState<TAutocompleteDropdownItem[]>();
@@ -25,43 +25,46 @@ export const FoundPokemonModal = ({navigation, route}:any) => {
     const filterToken = q.toLowerCase()
     console.log('getPokemons query:', q)
     if (typeof q !== 'string' || q.length < 3) {
-      setPokemonItems([]);
+      setPokemonItems(null);
       return;
     }
     setLoading(true);
     const {names} = await getPokemons(100000, 0);
     const pokemons = names
       .filter(n => n.toLowerCase().includes(filterToken))
-      .map(n => ({
-        id: n,
+      .map((n, i) => ({
+        id: i,
         title: n,
       }));
     setPokemonItems(pokemons);
     setLoading(false);
   }, [])
 
-  useEffect(() => console.log('render found pokemon modal'));
-
   const isLoading = true;
 
   return (
     <View style={styles.container}>
-      <PokemonDropdown handleGetPokemons={handleGetPokemons} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} dataSet={pokemonItems} isloading={loading} setPokemonItems={setPokemonItems}/>
+      { 
+        !selectedPokemon
+        ? <PokemonDropdown handleGetPokemons={handleGetPokemons} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} dataSet={pokemonItems} isloading={loading} setPokemonItems={setPokemonItems}/>
+        : 
+        <>
+          <Text>Selected Pokemon: {selectedPokemon.title}</Text>
+          <Button title="Change pokemon" onPress={() => setSelectedPokemon(null)}/>
+        </>
+      }
       <Text>Notes</Text>
       <TextInput style={styles.textInput}></TextInput>
-      <Button title='Add' onPress={e => handlePress()} disabled={isLoading}></Button>
+      <Button title='Add' onPress={e => handlePress()} disabled={loading}></Button>
     </View>
   )
 }
 
-export const PokemonDropdown = ({handleGetPokemons, selectedPokemon, setSelectedPokemon, dataSet, isLoading, setPokemonItems}:any) => {
-  console.log(selectedPokemon);
+export const PokemonDropdown = ({handleGetPokemons, selectedPokemon, setSelectedPokemon, dataSet, isLoading, setPokemonItems, ref}:any) => {
 
   const onClearPress = useCallback(() => {
     setPokemonItems(null)
   }, [])
-
-  const onOpenSuggestionsList = useCallback(isOpened => {}, [])
 
   return (
     <AutocompleteDropdown
@@ -72,9 +75,14 @@ export const PokemonDropdown = ({handleGetPokemons, selectedPokemon, setSelected
       useFilter={false}
       debounce={600}
       onClear={onClearPress}
-      onOpenSuggestionsList={onOpenSuggestionsList}
       onSelectItem={item => {
-        item && setSelectedPokemon(item.id)
+        item && setSelectedPokemon(item);
+        console.log('select: ', item)
+      }}
+      textInputProps={{
+        placeholder: 'Type 3+ letters',
+        autoCorrect: false,
+        autoCapitalize: 'none',
       }}
       dataSet={dataSet}
       loading={isLoading}
