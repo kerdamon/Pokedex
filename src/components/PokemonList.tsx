@@ -2,7 +2,9 @@ import { FlatList, Text, View, Image, StyleSheet, Button, ActivityIndicator, Pre
 import { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
-import { getPokemons, getPokemon } from '../api';
+import { getPokemonNames, getPokemon } from '../api';
+
+import type Pokemon from '../types/Pokemon';
 
 export const PokemonList = ({navigation}:any) =>{
   const pokemonsPerPage = 10;
@@ -19,17 +21,13 @@ export const PokemonList = ({navigation}:any) =>{
   };
 
   const {isLoading} = useQuery(['pokemons', page], async () => {
-    const {names, isLast} = await getPokemons(pokemonsPerPage, pokemonsPerPage * page);
+    const {names, isLast} = await getPokemonNames(pokemonsPerPage, pokemonsPerPage * page);
     if (isLast) {
       setIsListEnd(true);
     }
-    let newPokemons:[] = [];
+    let newPokemons:Pokemon[] = [];
     for (const name of names) {
-      let pokemon:any = {};
-      pokemon.name = name;
-      const pokemonData = (await getPokemon(name!)).data;
-      pokemon.weight = pokemonData.weight;
-      pokemon.uri = pokemonData.sprites.other["official-artwork"].front_default
+      const pokemon = await getPokemon(name!);
       newPokemons.push(pokemon);
     }
     setPokemons([...pokemons, ...newPokemons]);

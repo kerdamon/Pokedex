@@ -1,9 +1,9 @@
-import { View, StyleSheet, Text, Image } from "react-native";
+import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
 
-export const PokemonView = ({pokemonData}:any) => {
+export const PokemonView = ({pokemonData, style}:any) => {
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {
       !pokemonData 
       ? <Text>None</Text> 
@@ -18,10 +18,10 @@ export const PokemonView = ({pokemonData}:any) => {
 
 const InfoField = ({style, pokemonData}:any) => {
   return (
-    <View style={style}>
-      <Text>Weight: {pokemonData.weight}</Text>
+    <ScrollView style={style}>
+      <Text>Weight: {pokemonData.weight}</Text> 
       <Text>Types: </Text>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    flex: 2,
+    flex: 3,
     resizeMode: 'contain',
   },
   infoField: {

@@ -1,11 +1,12 @@
 import axios from "./axiosinstance";
 
-import { PokemonsData } from "./types";
+import type Pokemon from "../types/Pokemon";
+import type { PokemonDTO, PokemonNamesSlice } from "./types";
 
-export async function getPokemons(limit:number, offset:number): Promise<PokemonsData> {
+export async function getPokemonNames(limit:number, offset:number): Promise<PokemonNamesSlice> {
   try{
     const response = await axios.get(`/pokemon?limit=${limit}&offset=${offset}`);
-    let data:PokemonsData = {
+    let data:PokemonNamesSlice = {
       names: [],
       isLast: false
     }
@@ -17,14 +18,16 @@ export async function getPokemons(limit:number, offset:number): Promise<Pokemons
     }
     return data; 
   } catch (error) {
-    throw new Error('Failed to fetch pokemons');
+    throw new Error(`Failed to fetch pokemons. Limit: ${limit} Offset: ${offset}`);
   }
 }
 
-export async function getPokemon(name: string): Promise<any> {
-  try {
-    return await axios.get(`/pokemon/${name}`);
-  } catch (error) {
-    throw new Error(`Failed to tetch pokemon ${name}`);
-  }
+export async function getPokemon(name: string): Promise<Pokemon> {
+    const response = await axios.get(`/pokemon/${name}`);
+    const data = response.data;
+    return {
+      name,
+      weight: data.weight,
+      uri: data.sprites.other["official-artwork"].front_default
+    }
 }

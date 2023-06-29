@@ -1,33 +1,20 @@
-import { useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import MapView, { LongPressEvent, Marker, MarkerPressEvent } from 'react-native-maps';
+import { StyleSheet, View, Button } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function MapScreen({navigation}: any) {
-  const [markers, setMarkers] = useState<any>([]);
+import Map from '../components/Map';
+import { setMarkers } from '../redux/markerSlice';
+import { useStoreMarker } from '../hooks/useStoreMarkers';
+import { useClearMarkers } from '../hooks/useClearMarkers';
 
-  const handleMapPress = (e:LongPressEvent) => {
-    console.log(JSON.stringify(e.nativeEvent.coordinate.latitude) + JSON.stringify(e.nativeEvent.coordinate.latitude));
-    setMarkers([
-      ...markers,
-      {
-        key: JSON.stringify(e.nativeEvent.coordinate.latitude) + JSON.stringify(e.nativeEvent.coordinate.latitude),
-        pokemonData: null,
-        coordinate: e.nativeEvent.coordinate,
-      }
-    ]);
+export default function MapScreen({navigation}:any) {
+  const clearMarkers = useClearMarkers();
+  const handleOnPress = () => {
+    clearMarkers();
   }
-
-  const handleMarkerPress = (e:MarkerPressEvent) => {
-    console.log(markers.find(p => p.key === e.nativeEvent.id));
-  }  
-
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} onLongPress={e => handleMapPress(e)}>
-        {markers.map(m => (
-          <Marker key={m.key} identifier={m.key} coordinate={m.coordinate} onPress={e => handleMarkerPress(e)}/>
-        ))}
-      </MapView>
+      <Map navigation={navigation}/>
+      <Button title='Clear markers' onPress={handleOnPress}></Button>
     </View>
   );
 }
@@ -35,12 +22,5 @@ export default function MapScreen({navigation}: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  map: {
-    width: '100%',
-    height: '100%',
   }
-});
+})
