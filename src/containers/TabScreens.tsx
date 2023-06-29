@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { FoundPokemonModal } from '../screeens/FoundPokemonModal';
+import { RegisterFoundPokemonScreen } from '../screeens/RegisterFoundPokemonScreen';
+import FoundPokemonModal from '../screeens/FoundPokemonModal';
 import FavouriteScreen from "../screeens/FavouriteScreen";
 import ListScreen from '../screeens/ListScreen';
 import MapScreen from '../screeens/MapScreen';
@@ -71,7 +72,8 @@ const MapTab = () => {
         <MapStack.Screen name="Map" component={MapScreen}/>
       </MapStack.Group>
       <MapStack.Group>
-        <MapStack.Screen name="FoundPokemonModal" component={FoundPokemonModal} options={{title: 'New pokemon info'}}/>
+        <MapStack.Screen name="RegisterFoundPokemonScreen" component={RegisterFoundPokemonScreen} options={{title: 'New pokemon info'}}/>
+        <MapStack.Screen name="FoundPokemonModal" component={FoundPokemonModal} options={{presentation: 'modal'}}/>
       </MapStack.Group>
     </MapStack.Navigator>
   )

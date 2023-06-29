@@ -1,7 +1,7 @@
 import axios from "./axiosinstance";
 
-import Pokemon from "../types/Pokemon";
-import { PokemonNamesSlice } from "./types";
+import type Pokemon from "../types/Pokemon";
+import type { PokemonNamesSlice } from "./types";
 
 export async function getPokemons(limit:number, offset:number): Promise<PokemonNamesSlice> {
   try{
@@ -22,7 +22,7 @@ export async function getPokemons(limit:number, offset:number): Promise<PokemonN
   }
 }
 
-export async function getPokemon(name: string): Promise<any> {
+export async function getPokemon(name: string): Promise<Pokemon> {
   try {
     return await axios.get(`/pokemon/${name}`);
   } catch (error) {

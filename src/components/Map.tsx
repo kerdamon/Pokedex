@@ -4,17 +4,22 @@ import MapView, { LongPressEvent, Marker, MarkerPressEvent } from 'react-native-
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useLoadMarkers } from '../hooks/useLoadMarkers';
+import type { FoundPokemonMarker } from '../types/FoundPokemonMarker';
 
 export default function Map({navigation}: any) {
   const markers = useSelector(state => state.marker);
   useLoadMarkers();
 
   const handleMapPress = (e:LongPressEvent) => {
-    navigation.navigate('FoundPokemonModal', e.nativeEvent.coordinate);
+    navigation.navigate('RegisterFoundPokemonScreen', e.nativeEvent.coordinate);
   };
 
   const handleMarkerPress = (e:MarkerPressEvent) => {
-    console.log(markers.find(p => p.id === e.nativeEvent.id));
+    const markerData:FoundPokemonMarker = markers.find((p:FoundPokemonMarker) => p.id === e.nativeEvent.id);
+    navigation.navigate('FoundPokemonModal', {
+      pokemonName: markerData.pokemonName, 
+      notes: markerData.notes,
+    })
   };
 
   return (
