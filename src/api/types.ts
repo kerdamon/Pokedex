@@ -1,6 +1,6 @@
 export interface PokemonNamesSlice {
   names: string[],
-  isLast: Boolean,
+  hasNext: Boolean,
 }
 
 export interface PokemonDTO {

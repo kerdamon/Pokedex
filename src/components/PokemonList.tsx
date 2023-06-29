@@ -1,4 +1,6 @@
 import { FlatList, Text, View, Image, StyleSheet, Button, ActivityIndicator, Pressable } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
@@ -12,6 +14,7 @@ export const PokemonList = ({navigation}:any) =>{
   const [pokemons, setPokemons] = useState<[]>([]);
   const [refreshing, setRefreshing] = useState(true);
   const [isListEnd, setIsListEnd] = useState(false);
+  const insets = useSafeAreaInsets();
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -21,8 +24,8 @@ export const PokemonList = ({navigation}:any) =>{
   };
 
   const {isLoading} = useQuery(['pokemons', page], async () => {
-    const {names, isLast} = await getPokemonNames(pokemonsPerPage, pokemonsPerPage * page);
-    if (isLast) {
+    const {names, hasNext} = await getPokemonNames(pokemonsPerPage, pokemonsPerPage * page);
+    if (!hasNext) {
       setIsListEnd(true);
     }
     let newPokemons:Pokemon[] = [];
@@ -55,6 +58,7 @@ export const PokemonList = ({navigation}:any) =>{
                 {isListEnd && <Text>No more pokemons to load</Text>}
               </View>
             }
+            ListHeaderComponent={<View style={{minHeight: insets.top}}></View>}
             ListFooterComponentStyle={{alignItems: 'center', marginTop: 2}}
             refreshing={refreshing}
             onRefresh={handleRefresh}
