@@ -72,8 +72,8 @@ const MapTab = () => {
         <MapStack.Screen name="Map" component={MapScreen}/>
       </MapStack.Group>
       <MapStack.Group>
-        <MapStack.Screen name="RegisterFoundPokemonScreen" component={RegisterFoundPokemonScreen} options={{title: 'New pokemon info'}}/>
-        <MapStack.Screen name="FoundPokemonModal" component={FoundPokemonModal} options={{presentation: 'modal'}}/>
+        <MapStack.Screen name="RegisterFoundPokemonScreen" component={RegisterFoundPokemonScreen} options={{title: 'Register new pokemon'}}/>
+        <MapStack.Screen name="FoundPokemonModal" component={FoundPokemonModal} options={{presentation: 'modal', headerShown: false}}/>
       </MapStack.Group>
     </MapStack.Navigator>
   )
