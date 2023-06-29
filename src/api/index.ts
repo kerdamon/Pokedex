@@ -1,9 +1,9 @@
 import axios from "./axiosinstance";
 
 import type Pokemon from "../types/Pokemon";
-import type { PokemonNamesSlice } from "./types";
+import type { PokemonDTO, PokemonNamesSlice } from "./types";
 
-export async function getPokemons(limit:number, offset:number): Promise<PokemonNamesSlice> {
+export async function getPokemonNames(limit:number, offset:number): Promise<PokemonNamesSlice> {
   try{
     const response = await axios.get(`/pokemon?limit=${limit}&offset=${offset}`);
     let data:PokemonNamesSlice = {
@@ -23,9 +23,11 @@ export async function getPokemons(limit:number, offset:number): Promise<PokemonN
 }
 
 export async function getPokemon(name: string): Promise<Pokemon> {
-  try {
-    return await axios.get(`/pokemon/${name}`);
-  } catch (error) {
-    throw new Error(`Failed to tetch pokemon ${name}`);
-  }
+    const response = await axios.get(`/pokemon/${name}`);
+    const data = response.data;
+    return {
+      name,
+      weight: data.weight,
+      uri: data.sprites.other["official-artwork"].front_default
+    }
 }

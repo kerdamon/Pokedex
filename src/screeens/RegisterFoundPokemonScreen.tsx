@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef } from "react";
 
 import { useStoreMarker } from "../hooks/useStoreMarkers";
 import { useState } from "react";
-import { getPokemons } from "../api";
+import { getPokemonNames } from "../api";
 
 export const RegisterFoundPokemonScreen = ({navigation, route}:any) => {
   const [selectedPokemon, setSelectedPokemon] = useState<TAutocompleteDropdownItem>(null);
@@ -31,7 +31,7 @@ export const RegisterFoundPokemonScreen = ({navigation, route}:any) => {
       return;
     }
     setLoading(true);
-    const {names} = await getPokemons(100000, 0);
+    const {names} = await getPokemonNames(100000, 0);
     const pokemons = names
       .filter(n => n.toLowerCase().includes(filterToken))
       .map((n, i) => ({
