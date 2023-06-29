@@ -21,8 +21,8 @@ export const PokemonList = ({navigation}:any) =>{
   };
 
   const {isLoading} = useQuery(['pokemons', page], async () => {
-    const {names, isLast} = await getPokemonNames(pokemonsPerPage, pokemonsPerPage * page);
-    if (isLast) {
+    const {names, hasNext} = await getPokemonNames(pokemonsPerPage, pokemonsPerPage * page);
+    if (!hasNext) {
       setIsListEnd(true);
     }
     let newPokemons:Pokemon[] = [];

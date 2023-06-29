@@ -8,13 +8,13 @@ export async function getPokemonNames(limit:number, offset:number): Promise<Poke
     const response = await axios.get(`/pokemon?limit=${limit}&offset=${offset}`);
     let data:PokemonNamesSlice = {
       names: [],
-      isLast: false
+      hasNext: true
     }
     for (const result of response.data.results) {
       data.names.push(result.name);
     }
     if (!response.data.next) {
-      data.isLast = true;
+      data.hasNext = false;
     }
     return data; 
   } catch (error) {
