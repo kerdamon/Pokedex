@@ -1,4 +1,6 @@
+import { StyleProp, ViewStyle } from "react-native";
 import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
+import Pokemon from "../types/Pokemon";
 
 export const PokemonView = ({pokemonData, style}:any) => {
 
@@ -16,11 +18,11 @@ export const PokemonView = ({pokemonData, style}:any) => {
   );
 }
 
-const InfoField = ({style, pokemonData}:any) => {
+const InfoField = ({style, pokemonData}:{style:StyleProp<ViewStyle>, pokemonData:Pokemon}) => {
   return (
     <ScrollView style={style}>
       <Text>Weight: {pokemonData.weight}</Text> 
-      <Text>Types: </Text>
+      <Text>Types: {pokemonData.types?.map(t => <Text>{t} </Text>)}</Text>
     </ScrollView>
   )
 }

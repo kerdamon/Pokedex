@@ -87,14 +87,6 @@ const Name = ({style, name}:any) => {
   return <Text style={[style, styles.text, styles.bigText]}>{name}</Text>;
 }
 
-const Weight = ({style, weight}:any) => {
-  return <Text style={[style, styles.text]}>Weight: {weight}</Text>;
-}
-
-const Types = ({style, type}:any) => {
-  return <Text style={[style, styles.text]}>Types: {}</Text>;
-}
-
 const PokemonSprite = ({style, uri}:any) => {
   return <Image source={{uri, width: 64, height:64}}/>
 }

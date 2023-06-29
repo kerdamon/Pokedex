@@ -1,3 +1,5 @@
+import { TypeOfPokemon } from "../types/Pokemon"
+
 export interface PokemonNamesSlice {
   names: string[],
   hasNext: Boolean,
@@ -11,5 +13,12 @@ export interface PokemonDTO {
       }
     }
   },
-  weight: number
+  weight: number,
+  types: pokemonTypeWrap[]
+}
+
+interface pokemonTypeWrap {
+  type: {
+    name: TypeOfPokemon
+  }
 }

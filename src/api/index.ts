@@ -24,10 +24,11 @@ export async function getPokemonNames(limit:number, offset:number): Promise<Poke
 
 export async function getPokemon(name: string): Promise<Pokemon> {
     const response = await axios.get(`/pokemon/${name}`);
-    const data = response.data;
+    const data:PokemonDTO = response.data;
     return {
       name,
       weight: data.weight,
-      uri: data.sprites.other["official-artwork"].front_default
+      uri: data.sprites.other["official-artwork"].front_default,
+      types: data.types.map(e => e.type.name)
     }
 }
