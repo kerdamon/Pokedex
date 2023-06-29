@@ -1,10 +1,7 @@
 import { TextInput, View, StyleSheet, Text, Button } from "react-native"
-import {AutocompleteDropdown, TAutocompleteDropdownItem} from 'react-native-autocomplete-dropdown'
-import { useCallback, useEffect, useRef } from "react";
 
 import { useStoreMarker } from "../hooks/useStoreMarkers";
 import { useState } from "react";
-import { getPokemonNames } from "../api";
 import { PokemonNameDropdown } from "../components/PokemonNameDropdown";
 
 export const RegisterFoundPokemonScreen = ({navigation, route}:any) => {
