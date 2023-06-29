@@ -1,4 +1,5 @@
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import PokemonView from '../components/PokemonView';
 import useLoadPokemon from '../hooks/useLoadPokemon';
@@ -10,7 +11,7 @@ export default function FavouriteScreen({navigation}: any) {
   const storePokemon = useStorePokemon();
 
   return (
-    <>
+    <SafeAreaView style={styles.container}>
       <View style={{flex:1, justifyContent:'center'}}>
         {
         pokemonData 
@@ -19,6 +20,12 @@ export default function FavouriteScreen({navigation}: any) {
         }
       </View>
       <Button onPress={() => storePokemon(null)} title='Unfavourite'></Button>
-    </>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+})
