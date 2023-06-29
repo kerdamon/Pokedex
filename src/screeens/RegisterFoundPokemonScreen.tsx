@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { useStoreMarker } from "../hooks/useStoreMarkers";
 import { useState } from "react";
 import { getPokemonNames } from "../api";
+import DropdownComponent from "../components/testDropdown";
 
 export const RegisterFoundPokemonScreen = ({navigation, route}:any) => {
   const [selectedPokemon, setSelectedPokemon] = useState<TAutocompleteDropdownItem>(null);
@@ -46,7 +47,7 @@ export const RegisterFoundPokemonScreen = ({navigation, route}:any) => {
 
   return (
     <View style={styles.container}>
-      { 
+      {/* { 
         !selectedPokemon
         ? <PokemonDropdown handleGetPokemons={handleGetPokemons} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} dataSet={pokemonItems} isloading={loading} setPokemonItems={setPokemonItems}/>
         : 
@@ -54,7 +55,8 @@ export const RegisterFoundPokemonScreen = ({navigation, route}:any) => {
           <Text>Selected Pokemon: {selectedPokemon.title}</Text>
           <Button title="Change pokemon" onPress={() => setSelectedPokemon(null)}/>
         </>
-      }
+      } */}
+      <DropdownComponent/>
       <Text>Notes</Text>
       <TextInput multiline style={styles.textInput} onChangeText={handleNotesTextChange}
         value={notes}></TextInput>
